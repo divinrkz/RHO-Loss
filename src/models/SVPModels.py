@@ -65,7 +65,7 @@ class ForgettingEventsModel(OneModel_SVP):
         self.was_correct[index.cpu().numpy()] |= correct_batch.astype(np.bool)
         self.n_forgotten[index.cpu().numpy()[transitions == -1]] += 1.0
 
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("train_loss", loss, on_step=True, on_epoch=True, logger=True)
         self.log("train_acc", acc, on_step=True, on_epoch=True, logger=True)
 

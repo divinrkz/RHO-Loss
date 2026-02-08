@@ -130,7 +130,7 @@ class ImportanceSamplingModel(pl.LightningModule):
 
         # training metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("train_loss", loss.mean(), on_step=True, on_epoch=True, logger=True)
         self.log(
             "loss_used_for_backward",
@@ -165,7 +165,7 @@ class ImportanceSamplingModel(pl.LightningModule):
         # validation metrics
         logits = self.model(data)
         preds = torch.argmax(logits, dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         loss = self.loss(logits, target)
         self.log(
             "val_loss_epoch",
@@ -188,7 +188,7 @@ class ImportanceSamplingModel(pl.LightningModule):
 
         # validation metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("test_loss", loss, prog_bar=True)
         self.log("test_acc", acc, prog_bar=True)
 

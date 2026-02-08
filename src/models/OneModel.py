@@ -58,7 +58,7 @@ class OneModel(pl.LightningModule):
 
         # training metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("train_loss", loss, on_step=True, on_epoch=True, logger=True)
         self.log("train_acc", acc, on_step=True, on_epoch=True, logger=True)
 
@@ -81,7 +81,7 @@ class OneModel(pl.LightningModule):
 
         # training metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("val_loss_epoch", loss, on_epoch=True, logger=True, sync_dist=True)
         self.log("val_acc_epoch", acc, on_epoch=True, logger=True, sync_dist=True)
 
@@ -95,7 +95,7 @@ class OneModel(pl.LightningModule):
 
         # training metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("test_loss_epoch", loss, on_epoch=True, logger=True)
         self.log("test_acc_epoch", acc, on_epoch=True, logger=True)
 

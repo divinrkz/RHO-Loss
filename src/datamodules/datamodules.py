@@ -2,7 +2,6 @@
 from pathlib import Path
 
 import numpy as np
-from numpy.lib.function_base import select
 
 # lightning related imports
 import pytorch_lightning as pl

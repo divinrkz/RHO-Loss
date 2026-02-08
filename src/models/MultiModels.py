@@ -213,7 +213,7 @@ class MultiModels(pl.LightningModule):
 
             # logging
             preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-            proxy_model_acc = accuracy(preds, target)
+            proxy_model_acc = accuracy(preds, target, task="multiclass", num_classes=10)
             self.log(
                 "proxy_train_loss",
                 proxy_model_loss.mean(),
@@ -244,7 +244,7 @@ class MultiModels(pl.LightningModule):
 
             # logging
             preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-            irreducible_acc = accuracy(preds, target)
+            irreducible_acc = accuracy(preds, target, task="multiclass", num_classes=10)
             self.log(
                 "IrLoMo_train_loss",
                 irreducible_loss.mean(),
@@ -272,7 +272,7 @@ class MultiModels(pl.LightningModule):
 
         # training metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("train_loss", loss.mean(), on_step=True, on_epoch=True, logger=True)
         self.log("train_acc", acc, on_step=True, on_epoch=True, logger=True)
 
@@ -470,7 +470,7 @@ class MultiModels(pl.LightningModule):
 
         # validation metrics
         preds = torch.argmax(logits, dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log(
             "val_loss_epoch",
             loss.mean(),
@@ -487,7 +487,7 @@ class MultiModels(pl.LightningModule):
             logits = self.irreducible_loss_generator(data)
             irlomo_loss = self.loss(logits, target)
             preds = torch.argmax(logits, dim=1)
-            irlomo_acc = accuracy(preds, target)
+            irlomo_acc = accuracy(preds, target, task="multiclass", num_classes=10)
             self.log(
                 "irlomo_val_loss",
                 irlomo_loss.mean(),
@@ -509,7 +509,7 @@ class MultiModels(pl.LightningModule):
             logits = self.proxy_model(data)
             proxy_loss = self.loss(logits, target)
             preds = torch.argmax(logits, dim=1)
-            proxy_acc = accuracy(preds, target)
+            proxy_acc = accuracy(preds, target, task="multiclass", num_classes=10)
             self.log(
                 "proxy_val_loss_epoch",
                 proxy_loss.mean(),
@@ -535,7 +535,7 @@ class MultiModels(pl.LightningModule):
 
         # validation metrics
         preds = torch.argmax(F.log_softmax(logits, dim=1), dim=1)
-        acc = accuracy(preds, target)
+        acc = accuracy(preds, target, task="multiclass", num_classes=10)
         self.log("test_loss", loss, prog_bar=True)
         self.log("test_acc", acc, prog_bar=True)
 
